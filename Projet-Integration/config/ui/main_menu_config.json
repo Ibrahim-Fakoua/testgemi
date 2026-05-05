@@ -1,0 +1,10 @@
+{
+	"item" : {
+		"label": "Start New Simulation",
+		"method" : "NewSimulation"
+	},
+	"item" : {
+		"label" : "Load Simulation",
+		"method" : "LoadSimulation"
+	}
+}

@@ -1,0 +1,49 @@
+Mostly for reference and might become a constant global (?) will talk abt in meeting
+a TU is a "Time Unit", which is a timestamp in the scheduler
+
+One Day : 2400 TU
+One Hour : 100 TU
+
+Daytime : 1200 TU
+Nighttime : 1200 TU
+
+Animal sleep times vary extremely, from around 3 hours in horses and around 20 hours with koalas
+The average sleep times in animals are 8 to 10 hours
+So for a range of around 4 to 16 hours per day with an average around 9 we get
+
+Average Sleep time : 900 TU
+Sleep modifier range : 0,5 to 1,75
+
+Animals can go amounts of time without food that would be unrealistic to depict in the simulation, with multiple animals being able to survive months without food
+Their lifespan, gestation time, dehydration death times also suffer from the same problem if we want the siulation to both be interactable and depict multiple generations of animals
+So, all of these will be severely shortened for the sake of the simulation and replaced with relatively arbitrary numbers
+
+The average lifespan of a critter will thus be 7 days
+
+Average lifespan : 16800 TU
+
+In wildlife, gestation time is usually around 2% of lifespan, but can go up to 5% with elephant thus 
+
+Average gestation time : lifespan * 2% = 336 TU
+Gestation time modifier range : 0,5 to 2,5
+
+Most animals die of thirst within 2 to 3 days, however some animals like camels evolved to survive up to 15 days without
+Scaling this on our fictionnal lifespan would result in a number of time unusable for the simulation, around 0,1% of lifespan which would result in critters being in danger of dying of thirst around 15 times a dayy
+Actually using 2 to 3 days would as a base would make water not enough of a threat for the critters, however allowing those who evolve with good water efficiency to have it would be reasonable
+To make thirst a realistic threat a day and a half without water could be the base thirst death 
+
+Average thirst death time : day * 1.5 = 3600 TU
+Thirst modifier range : 0,5 to 1,5 (3/4th of a day to 2,25 days)
+
+For starvation, multiple animals develop manners to survive long periods of time without food thanks to fat deposits
+Im a bit unsure still about how to deal with hunger, but i think for now all we'll do is the same base number as thirst, but with a higher cap for the modifier
+
+Average starvation time : day * 1.5 = 3600 TU
+Starvation modifier range : 0,5 to 2 (3/4th of a day to 3 days)
+
+There isnt much numbers about injury healing time in animals, but the injuries work as a level from 1 to 10 injury
+so, lets say an extremely severe injury takes 3 days to recover for an average critter
+Average healing times 
+
+Average injury healing time : 3-days / 10 = 720 TU
+Injury

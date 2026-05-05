@@ -1,0 +1,31 @@
+{
+	"Fichier": [
+		{
+			"label": "Sauvegarder...",
+			"method_name": "OnSaveGame"
+		},
+		{
+			"label": "Quitter...",
+			"method_name": "OnReturnToMainMenu"
+		}
+	],
+	"INUTILE, ENLEVER DU UI": [
+		{
+			"label": "Test Item",
+			"method_name": "TestMethod2"
+		}
+	],
+	"Options": [
+		{
+			"label": "Ouvrir Options",
+			"method_name": "OnOpenSettings"
+		}
+	],
+	"Données": [
+		{
+			"label": "Ouvrir base de données",
+			"method_name": "OpenDBWindow"
+		}
+	]
+}
+ 

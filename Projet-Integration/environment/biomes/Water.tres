@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Biome" format=3 uid="uid://b3ufabld8odbo"]
+
+[ext_resource type="Script" uid="uid://bdipslgmxarmp" path="res://environment/scripts/Stats.gd" id="1_fapww"]
+[ext_resource type="Script" uid="uid://dnb3gbnk3y7l4" path="res://environment/scripts/StatsModifiers.gd" id="2_irpbj"]
+[ext_resource type="Script" uid="uid://d4fqbwicsrl5t" path="res://environment/scripts/Biome.gd" id="3_6ivf1"]
+
+[sub_resource type="Resource" id="Resource_4xr2i"]
+script = ExtResource("1_fapww")
+metadata/_custom_type_script = "uid://bdipslgmxarmp"
+
+[sub_resource type="Resource" id="Resource_t67r1"]
+script = ExtResource("2_irpbj")
+metadata/_custom_type_script = "uid://dnb3gbnk3y7l4"
+
+[resource]
+script = ExtResource("3_6ivf1")
+biome_name = "Water"
+biome_stats_modifiers = SubResource("Resource_t67r1")
+biome_base_stats = SubResource("Resource_4xr2i")
+metadata/_custom_type_script = "uid://d4fqbwicsrl5t"

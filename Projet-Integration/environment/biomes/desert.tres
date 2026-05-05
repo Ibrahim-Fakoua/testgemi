@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Biome" format=3 uid="uid://3k3aqbfbflr2"]
+
+[ext_resource type="Script" uid="uid://d4fqbwicsrl5t" path="res://environment/scripts/Biome.gd" id="1_x8plj"]
+[ext_resource type="Script" uid="uid://bdipslgmxarmp" path="res://environment/scripts/Stats.gd" id="2_yfjhe"]
+[ext_resource type="Script" uid="uid://dnb3gbnk3y7l4" path="res://environment/scripts/StatsModifiers.gd" id="2_yfjit"]
+
+[sub_resource type="Resource" id="Resource_yfjhe"]
+script = ExtResource("2_yfjhe")
+metadata/_custom_type_script = "uid://bdipslgmxarmp"
+
+[sub_resource type="Resource" id="Resource_yfjit"]
+script = ExtResource("2_yfjit")
+metadata/_custom_type_script = "uid://dnb3gbnk3y7l4"
+
+[resource]
+script = ExtResource("1_x8plj")
+biome_name = "Desert"
+biome_stats_modifiers = SubResource("Resource_yfjit")
+biome_base_stats = SubResource("Resource_yfjhe")
+metadata/_custom_type_script = "uid://d4fqbwicsrl5t"
