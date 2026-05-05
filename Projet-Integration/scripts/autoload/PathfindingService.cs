@@ -208,7 +208,12 @@ public partial class PathfindingService : Node
     /// <summary>
     /// Returns all possible moves from this tile's position, or an empty array if no moves are possible.
     /// </summary>
-    public List<Vector3I> PossibleMoves(Vector3I origin)
+    public Godot.Collections.Array<Vector3I> PossibleMoves(Vector3I origin)
+    {
+        return new Godot.Collections.Array<Vector3I>(PossibleMovesList(origin));
+    }
+
+    private List<Vector3I> PossibleMovesList(Vector3I origin)
     {
         DisableTile(origin, false);
 
@@ -403,7 +408,7 @@ public partial class PathfindingService : Node
     /// </summary>
     public Vector3I MoveAwayFrom(Vector3I origin, GodotObject scary)
     {
-        var moves = PossibleMoves(origin);
+        var moves = PossibleMovesList(origin);
         var furthestMoves = new List<Vector3I>();
         var scaryPos = (Vector3I)scary.Get("position");
 
@@ -568,7 +573,7 @@ public partial class PathfindingService : Node
     /// <summary>
     /// Searches for things with specified tags within a maximum depth of chunks.
     /// </summary>
-    public Chunk SearchForThings(Vector3I startingPosition, int maxDepth, string[] things, string[] filter)
+    private Chunk SearchForThings(Vector3I startingPosition, int maxDepth, string[] things, string[] filter)
     {
         var chunk = GetChunkAtTile(startingPosition);
 
@@ -678,7 +683,7 @@ public partial class PathfindingService : Node
     /// <summary>
     /// Highlights tiles with a specific variant.
     /// </summary>
-    public void HighlightTiles(List<Vector3I> tilesToHighlight, int variant)
+    public void HighlightTiles(Godot.Collections.Array<Vector3I> tilesToHighlight, int variant)
     {
         foreach (var tile in tilesToHighlight)
         {
@@ -802,7 +807,7 @@ public partial class PathfindingService : Node
     /// <summary>
     /// Gets all tiles within an area at the given coordinates.
     /// </summary>
-    public List<Vector3I> GetAllTilesInArea(Vector2I coords)
+    private List<Vector3I> GetAllTilesInArea(Vector2I coords)
     {
         var center = BigHexToSmall(coords);
         return CubeRange(center, Radius);

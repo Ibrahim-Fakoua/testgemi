@@ -11,12 +11,12 @@ func _init(critter:Critter) -> void :
 
 func startup() -> void:
 	if !found_food :
-		var possible_food = critter.pathfinding.move_to_closest_thing(critter.position, ["meat"])
+		var possible_food = critter.pathfinding.MoveToClosestThing(critter.position, ["meat"])
 		if possible_food :
 			found_food = true
 	
 	if !found_food and prey == null :
-		prey = critter.pathfinding.get_nearest_prey(critter.position, critter.get_food_chain(), [critter.get_species()])
+		prey = critter.pathfinding.GetNearestPrey(critter.position, critter.get_food_chain(), [critter.get_species()])
 		if prey is Critter :
 			prey.tags.append("prey" + str(critter.creature_id))
 	
@@ -27,7 +27,7 @@ func startup() -> void:
 
 func activate() -> void:
 	if prey == null and !found_food : 
-		var possible_moves : Array = critter.pathfinding.possible_moves(critter.position)
+		var possible_moves : Array = critter.pathfinding.PossibleMoves(critter.position)
 		if possible_moves.size() == 0:
 			possible_moves.append(critter.position)
 		var random_direction = randi() % possible_moves.size()
@@ -35,12 +35,12 @@ func activate() -> void:
 		critter.move(destination_pos)
 		startup()
 	elif found_food :
-		var destination_pos = critter.pathfinding.move_to_closest_thing(critter.position, ["meat"])
+		var destination_pos = critter.pathfinding.MoveToClosestThing(critter.position, ["meat"])
 		if destination_pos is Vector3i :
 			critter.move(destination_pos)
 			startup()
 		elif destination_pos == null :
-			var wandering_pos : Array = critter.pathfinding.possible_moves(critter.position)
+			var wandering_pos : Array = critter.pathfinding.PossibleMoves(critter.position)
 			if wandering_pos.size() == 0:
 				wandering_pos.append(critter.position)
 			var random_direction = randi() % wandering_pos.size()
@@ -51,9 +51,9 @@ func activate() -> void:
 		else :
 			end()
 	elif prey != null : 
-		var destination_pos = critter.pathfinding.move_to_closest_thing(critter.position, ["prey" + str(critter.creature_id)])
+		var destination_pos = critter.pathfinding.MoveToClosestThing(critter.position, ["prey" + str(critter.creature_id)])
 		if destination_pos is Vector3i :
-			if critter.pathfinding.move_to_closest_thing(critter.position, ["prey" + str(critter.creature_id)]) is Critter :
+			if critter.pathfinding.MoveToClosestThing(critter.position, ["prey" + str(critter.creature_id)]) is Critter :
 				_attack_prey()
 			else :
 				startup()

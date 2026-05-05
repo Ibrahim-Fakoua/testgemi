@@ -13,11 +13,11 @@ func startup() -> void :
 func activate() -> void : 
 	var possible_food
 	if critter.tags.has("herbivore") :
-		possible_food = critter.pathfinding.move_to_closest_thing(critter.position, ["food", "fruit"], ["empty"])
+		possible_food = critter.pathfinding.MoveToClosestThing(critter.position, ["food", "fruit"], ["empty"])
 	elif critter.tags.has("carnivore") :
-		possible_food = critter.pathfinding.move_to_closest_thing(critter.position, ["food", "meat"], ["empty"])
+		possible_food = critter.pathfinding.MoveToClosestThing(critter.position, ["food", "meat"], ["empty"])
 	else :
-		possible_food = critter.pathfinding.move_to_closest_thing(critter.position, ["food"], ["empty"])
+		possible_food = critter.pathfinding.MoveToClosestThing(critter.position, ["food"], ["empty"])
 	if possible_food is GenericFoodEntity :
 		food_pos = possible_food.position
 		critter.eat(possible_food)

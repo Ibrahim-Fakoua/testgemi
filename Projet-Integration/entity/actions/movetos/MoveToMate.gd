@@ -30,11 +30,11 @@ func end() -> void :
 func _find_mate() -> Critter :
 	var possible_mate
 	if critter.tags.has("male") :
-		possible_mate = critter.pathfinding.move_to_closest_thing(critter.position, ["wantsMate", "female", critter.get_species()])
+		possible_mate = critter.pathfinding.MoveToClosestThing(critter.position, ["wantsMate", "female", critter.get_species()])
 		if possible_mate is Critter : 
 			return possible_mate
 	else :
-		possible_mate =  critter.pathfinding.move_to_closest_thing(critter.position, ["wantsMate", "male", critter.get_species()])
+		possible_mate =  critter.pathfinding.MoveToClosestThing(critter.position, ["wantsMate", "male", critter.get_species()])
 		if possible_mate is Critter : 
 			return possible_mate
 	return null

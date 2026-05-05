@@ -10,7 +10,7 @@ func startup() -> void :
 	schedule_default_startup(wandering_delay)
 
 func activate() -> void :
-	var possible_moves : Array = critter.pathfinding.possible_moves(critter.position)
+	var possible_moves : Array = critter.pathfinding.PossibleMoves(critter.position)
 	if possible_moves.size() == 0:
 		possible_moves.append(critter.position)
 	var random_direction = randi() % possible_moves.size()

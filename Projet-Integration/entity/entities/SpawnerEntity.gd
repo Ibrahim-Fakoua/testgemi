@@ -17,7 +17,7 @@ func _init(pathfinding, position:Vector3i, spawn_cooldown:int, spawned_class_fil
 func spawn() -> void :
 	for i in range(amount_per_spawn) :
 		var chosen_location: Vector3i
-		var possible_spawn_locations = pathfinding.possible_moves(position)
+		var possible_spawn_locations = pathfinding.PossibleMoves(position)
 		if possible_spawn_locations.size() != 0 :
 			var random_location = randi() % possible_spawn_locations.size()
 			chosen_location = possible_spawn_locations.get(random_location)

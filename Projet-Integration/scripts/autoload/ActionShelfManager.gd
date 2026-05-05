@@ -14,7 +14,7 @@ func _handle_action(item_signal) -> void :
 		push_warning("Pathfinding not ready yet, please wait for world generation to complete")
 		return
 
-	if pathfinding.validate_tile(item_signal.Position):
+	if pathfinding.ValidateTile(item_signal.Position):
 		if item_signal.CategoryName == "Espèces" :
 			handle_critter_signal(item_signal)
 

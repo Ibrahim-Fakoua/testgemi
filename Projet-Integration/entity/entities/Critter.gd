@@ -89,13 +89,13 @@ func _initialize_action_sprite() -> void :
 	action_sprite = Sprite2D.new()
 	action_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	action_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	action_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	action_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	add_child(action_sprite)
 	
 	gender_sprite = Sprite2D.new()
 	gender_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	gender_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	gender_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	gender_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	add_child(gender_sprite)
 	var gender_texture:Texture2D
 	if tags.has("male") :
@@ -107,13 +107,13 @@ func _initialize_action_sprite() -> void :
 	pregnancy_sprite = Sprite2D.new()
 	pregnancy_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	pregnancy_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	pregnancy_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	pregnancy_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	add_child(pregnancy_sprite)
 	
 	injury_sprite = Sprite2D.new()
 	injury_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	injury_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	injury_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	injury_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	add_child(injury_sprite)
 
 ## Schedules the core events any critter has and depends on for functionning.
@@ -358,17 +358,17 @@ func eat(food:GenericFoodEntity) -> void :
 
 ## Changes the critter's and its sprites' positions on the map
 func move(new_position: Vector3i) -> void :
-	pathfinding.disable_tile(position,false)
-	pathfinding.disable_tile(new_position,true)
+	pathfinding.DisableTile(position,false)
+	pathfinding.DisableTile(new_position,true)
 	
-	pathfinding.am_i_switching_chunks(self, position, new_position)
+	pathfinding.AmISwitchingChunks(self, position, new_position)
 	
 	position = new_position
 	for specific_sprite in [sprite, action_sprite, pregnancy_sprite, gender_sprite, injury_sprite] :
-		specific_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+		specific_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	
 	if current_action.action_name != CritterConst.ActionNames.FLEE :
-		var possible_danger = pathfinding.am_i_in_danger(position, get_fightscore(), get_morale(), [get_species()])
+		var possible_danger = pathfinding.AmIInDanger(position, get_fightscore(), get_morale(), [get_species()])
 		if possible_danger :
 			behavior.on_sense_danger()
 		elif current_action.action_name == CritterConst.ActionNames.FLEE :
@@ -387,7 +387,7 @@ func bear_child() -> void :
 	behavior.on_done_breeding()
 
 func give_birth() -> void :
-	var possible_birth_locations = pathfinding.possible_moves(position)
+	var possible_birth_locations = pathfinding.PossibleMoves(position)
 	possible_birth_locations.shuffle()
 	var count = 0
 	for i in possible_birth_locations :
