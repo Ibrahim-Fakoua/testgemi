@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://be8osajasmcxu"]
+
+[ext_resource type="Script" uid="uid://ddb2vh0o8jvg" path="res://environment/scripts/nodes_scripts/HeightMapTest.cs" id="1_q4djx"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=810549029]
+position = Vector2(30, 8.23)
+rotation = 1.5707964
+scale = Vector2(10, 10)
+offset = Vector2(-70.645, -150)
+flip_v = true
+script = ExtResource("1_q4djx")

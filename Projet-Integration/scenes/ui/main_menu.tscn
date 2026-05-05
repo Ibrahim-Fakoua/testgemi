@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dgay5uuy5qbv8"]
+
+[ext_resource type="Script" uid="uid://cu05fe6c33p6r" path="res://scripts/main_menu/MainMenu.cs" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://crsfspyvoytdt" path="res://assets/MainMenu.png" id="2_1g8jr"]
+[ext_resource type="Script" uid="uid://beuurlk1lniqi" path="res://scripts/simulation/interface/SettingsDialog.cs" id="3_1g8jr"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=1266345628]
+script = ExtResource("1_ekxnf")
+
+[node name="UI_Root" type="Control" parent="." unique_id=1655449532]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI_Root" unique_id=1429989264]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_1g8jr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="UI_Root" unique_id=512066754]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Root/CenterContainer" unique_id=133012653]
+layout_mode = 2
+
+[node name="NewSimulationButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=103584433]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Nouvelle Simulation"
+
+[node name="LoadSimulationButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=1670155420]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Charger une Simulation"
+
+[node name="OpenSettingsButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=307881877]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Open Settings..."
+
+[node name="QuitButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=1361440749]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Because I am a loser"
+text = "Quitter"
+
+[node name="SettingsDialog" type="AcceptDialog" parent="UI_Root" unique_id=1142118960]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Settings"
+initial_position = 2
+ok_button_text = "Confirm"
+script = ExtResource("3_1g8jr")
+
+[node name="TabContainer" type="TabContainer" parent="UI_Root/SettingsDialog" unique_id=1344355826]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 92.0
+offset_bottom = 51.0
+
+[node name="LoadSimulationDialog" type="FileDialog" parent="UI_Root" unique_id=746372791]
+unique_name_in_owner = true
+oversampling_override = 1.0
+
+[node name="NewSimulationDialog" type="AcceptDialog" parent="UI_Root" unique_id=429458738]
+unique_name_in_owner = true
+
+[node name="TabContainer" type="TabContainer" parent="UI_Root/NewSimulationDialog" unique_id=975065699]
+offset_right = 8.0
+offset_bottom = 40.0

@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrarium_Virtuel", "Terrarium_Virtuel.csproj", "{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{3A29622A-1DDE-4A25-BC49-EAFF90DAA7AB}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

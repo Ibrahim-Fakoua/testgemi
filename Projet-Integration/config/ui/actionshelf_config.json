@@ -1,0 +1,21 @@
+{
+  "Espèces": [
+	{ "id": "0", "label": "Créature", "tooltip_text": "Omnivore sans caractéristique hors de l'ordinaire"},
+	{ "id": "1", "label": "Prédateur", "tooltip_text": "Prédateur Carnivore qui dors beaucoup"},
+	{ "id": "2", "label": "Omnivore", "tooltip_text": "Omnivore qui se contente de fruits, mais qui chasse la viande quand il en a besoin" },
+	{ "id": "3", "label": "Ambitieux", "tooltip_text": "Omnivore qui se retrouve souvent dans des confrontations contre des ennemis trop forts, et fuit rapidemment" },
+	{ "id": "4", "label": "Parresseux", "tooltip_text": "Herbivore lent et faible qui vit longtemps et n'a pas besoin de manger souvent" },
+	{ "id": "5", "label": "Anxieux", "tooltip_text": "Herbivore rapide et faible qui évite des confrontations avec presque toutes les espèces pour survivre" },
+	{ "id": "6", "label": "Charognard", "tooltip_text": "Carnivore qui utilise les carcasses laissées par d'autres animaux pour se nourrir" },
+	{ "id": "7", "label": "Gros-os", "tooltip_text": "Herbivore lent et faible qui son allure pour faire fuire ses prédateurs potentiels" },
+	{ "id": "8", "label": "Hyper-actif", "tooltip_text": "Herbivore très rapide qui se reproduit beaucoup, mais qui est mauvais pour identiier le danger" },
+	{ "id": "9", "label": "Kiki (Super-prédateur)", "tooltip_text": "Super-Prédateur trop dangereux et intimidant pour toutes les autre créatures de la simulation" },
+	{ "id": "10", "label": "Moustique", "tooltip_text": "Herbivore très rapide qui se reproduit et mange beaucoup trop" }
+  ],
+	"Nourriture" : [
+		{"id": "0", "label": "Carotte", "tooltip_text": "Une carotte"},
+		{"id": "1", "label": "Pommier", "tooltip_text": "I am an apple tree"},
+		{"id": "2", "label": "Pommes", "tooltip_text": "I am an apple"},
+		{"id": "3", "label": "Buisson à baies", "tooltip_text": "i am a berry bush"}
+	]
+}

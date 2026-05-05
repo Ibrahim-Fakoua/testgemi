@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://ddumy1tytpcod"]
+
+[ext_resource type="Script" uid="uid://i3s8rqagbrlg" path="res://scripts/database/DatabaseViewer.cs" id="1_t3oqe"]
+
+[node name="DBWindow" type="Window" unique_id=1179340245]
+process_mode = 3
+oversampling_override = 1.0
+mode = 1
+title = "Database Dashboard"
+initial_position = 1
+size = Vector2i(960, 480)
+wrap_controls = true
+script = ExtResource("1_t3oqe")
+
+[node name="DatabaseUI" type="Control" parent="." unique_id=79239314]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DatabaseUI" unique_id=961141792]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBar" type="MenuBar" parent="DatabaseUI/VBoxContainer" unique_id=1089466364]
+layout_mode = 2
+
+[node name="PopupMenu" type="PopupMenu" parent="DatabaseUI/VBoxContainer/MenuBar" unique_id=727080396]
+oversampling_override = 1.0
+item_count = 4
+item_0/text = "Something"
+item_0/id = 0
+item_1/text = "Checkable"
+item_1/checkable = 1
+item_1/id = 1
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Export as CSV"
+item_3/id = 3
+
+[node name="Control" type="Control" parent="DatabaseUI/VBoxContainer" unique_id=1920432539]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSplitContainer" type="HSplitContainer" parent="DatabaseUI/VBoxContainer/Control" unique_id=1538187478]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offsets = PackedInt32Array(128)
+split_offset = 128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer" unique_id=261481479]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="SimButton" type="OptionButton" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer" unique_id=1935726380]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer" unique_id=1581589514]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer/VBoxContainer" unique_id=853335426]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer/VBoxContainer/Panel" unique_id=592701837]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Data Tables"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DataTableTree" type="Tree" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer/VBoxContainer" unique_id=1135559623]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CodeEdit" type="CodeEdit" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/VBoxContainer" unique_id=1574982635]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Enter Query...
+[WIP]"
+emoji_menu_enabled = false
+
+[node name="Control" type="Control" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer" unique_id=107107783]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GraphTabContainer" type="TabContainer" parent="DatabaseUI/VBoxContainer/Control/HSplitContainer/Control" unique_id=2076350603]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

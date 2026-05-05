@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bfu3f6s3ymswt"]
+
+[ext_resource type="Script" uid="uid://d4j55hcg8lf2u" path="res://scripts/simulation/Simulation.cs" id="1_mwrr7"]
+[ext_resource type="Script" uid="uid://4jathsn4hn7" path="res://scripts/autoload/Scheduler.gd" id="1_y5vwh"]
+[ext_resource type="Script" uid="uid://desnhhrxpqlb6" path="res://scripts/simulation/GameLoop.cs" id="2_5eski"]
+[ext_resource type="Script" uid="uid://8qp0enpk5bpe" path="res://scripts/autoload/WorldManager.gd" id="3_160l5"]
+[ext_resource type="Script" uid="uid://ch1nqj6grfovi" path="res://scripts/autoload/ActionShelfManager.gd" id="3_gimvv"]
+[ext_resource type="PackedScene" uid="uid://c4smygdjqbxdx" path="res://scenes/ui/game_interface.tscn" id="4_ljsjv"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gimvv"]
+
+[node name="ActiveSimulation" type="Node" unique_id=2108749597 groups=["Persistent"]]
+script = ExtResource("1_mwrr7")
+SaveDirectory = "res://_persistent/saves"
+
+[node name="Scheduler" type="Node" parent="." unique_id=1569952503]
+script = ExtResource("1_y5vwh")
+
+[node name="ActionShelfManager" type="Node" parent="Scheduler" unique_id=899339045]
+script = ExtResource("3_gimvv")
+
+[node name="GameLoop" type="Node" parent="." unique_id=1580829553]
+script = ExtResource("2_5eski")
+
+[node name="WorldManager" type="Node" parent="." unique_id=1689945494 groups=["Persistent"]]
+script = ExtResource("3_160l5")
+
+[node name="GameInterface" parent="." unique_id=768211053 instance=ExtResource("4_ljsjv")]
+SpeedGroup = SubResource("ButtonGroup_gimvv")
