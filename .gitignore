@@ -1,0 +1,27 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# IDEA specific gitignore
+.idea/
+.vscode/
+
+# Exclude database 
+**.db
+**.sqlite
+**.sqlite-shm
+**.sqlite-wal
+
+# Whitelisting important files and folders
+!scripts/
+!assets/
+!addons/
+!project.godot
+
+
+*.sln.DotSettings.user
+Terrarium_Virtuel.csproj.*
+*.old
+
+*.tmp
+*.user

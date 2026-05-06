@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://c4smygdjqbxdx"]
+
+[ext_resource type="Script" uid="uid://yitmnum6wbbm" path="res://scripts/simulation/interface/GameInterface.cs" id="1_gxs86"]
+[ext_resource type="Script" uid="uid://jjloif8eu5r3" path="res://scripts/simulation/interface/ToolBarMenu.cs" id="2_jvdma"]
+[ext_resource type="Script" uid="uid://dg0pry5pi1qdd" path="res://scripts/simulation/interface/NotificationManager.cs" id="3_ata1p"]
+[ext_resource type="Script" uid="uid://r1w3814om7my" path="res://scripts/simulation/interface/ActionShelf.cs" id="4_gxs86"]
+[ext_resource type="PackedScene" uid="uid://d2aeyoxva2asg" path="res://scenes/camera_2d.tscn" id="5_co2dw"]
+[ext_resource type="ButtonGroup" uid="uid://c5l0quswfd8fs" path="res://scripts/simulation/resources/action_items.tres" id="5_jvdma"]
+[ext_resource type="Script" uid="uid://vvn8mbuub1ms" path="res://scripts/camera_2d.gd" id="6_7t2s6"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_k7irj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gxs86"]
+
+[node name="GameInterface" type="CanvasLayer" unique_id=768211053]
+script = ExtResource("1_gxs86")
+SpeedGroup = SubResource("ButtonGroup_k7irj")
+
+[node name="Root" type="Control" parent="." unique_id=1844284473]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="Root" unique_id=1231890250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopMenuBar" type="MenuBar" parent="Root/MainLayout" unique_id=66523003]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_jvdma")
+
+[node name="LoadingWarningLabel" type="Label" parent="Root/MainLayout" unique_id=2118069519]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On génère le monde, veuillez patienter..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUD" type="Control" parent="Root/MainLayout" unique_id=1317736762]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="BottomRightContainer" type="MarginContainer" parent="Root/MainLayout/HUD" unique_id=1368269660]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -86.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MainLayout/HUD/BottomRightContainer" unique_id=1342105935]
+layout_mode = 2
+
+[node name="TimeCounter" type="Label" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer" unique_id=766699373]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Jour 0 - 0t"
+
+[node name="EntityCounter" type="Label" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer" unique_id=1419304789]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 Créatures"
+
+[node name="SpeedLabel" type="Label" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer" unique_id=1505707930]
+layout_mode = 2
+text = "Vitesse :"
+
+[node name="TimeSpeedBoxContainer" type="HBoxContainer" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer" unique_id=1917655703]
+layout_mode = 2
+
+[node name="0" type="Button" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer/TimeSpeedBoxContainer" unique_id=87093998]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_k7irj")
+text = "0"
+
+[node name="16" type="Button" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer/TimeSpeedBoxContainer" unique_id=1248489022]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_k7irj")
+text = "16"
+
+[node name="32" type="Button" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer/TimeSpeedBoxContainer" unique_id=681330319]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_k7irj")
+text = "32
+"
+
+[node name="64" type="Button" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer/TimeSpeedBoxContainer" unique_id=905171375]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_k7irj")
+text = "64"
+
+[node name="256" type="Button" parent="Root/MainLayout/HUD/BottomRightContainer/VBoxContainer/TimeSpeedBoxContainer" unique_id=633095412]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_k7irj")
+text = "256"
+
+[node name="TopLeftContainer" type="MarginContainer" parent="Root/MainLayout/HUD" unique_id=2006362568]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="ToastContainer" type="VBoxContainer" parent="Root/MainLayout/HUD/TopLeftContainer" unique_id=585778073]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("3_ata1p")
+
+[node name="ActionTabContainer" type="TabContainer" parent="Root/MainLayout" unique_id=791512217]
+unique_name_in_owner = true
+visibility_layer = 515
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gxs86")
+tabs_position = 1
+clip_tabs = false
+deselect_enabled = true
+script = ExtResource("4_gxs86")
+ActionButtons = ExtResource("5_jvdma")
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Root" unique_id=1115581060]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Attention!"
+position = Vector2i(0, 36)
+cancel_button_text = "Retour"
+
+[node name="SaveNameDialog" type="FileDialog" parent="Root" unique_id=64920284]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Sauvegarder un fichier"
+ok_button_text = "Sauvegarde"
+cancel_button_text = "Retour"
+
+[node name="Camera2D" parent="." unique_id=437863094 instance=ExtResource("5_co2dw")]
+position = Vector2(1350, 905)
+script = ExtResource("6_7t2s6")

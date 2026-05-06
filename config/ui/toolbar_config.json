@@ -1,0 +1,19 @@
+{
+	"Fichier": [
+		{
+			"label": "Sauvegarder...",
+			"method_name": "OnSaveGame"
+		},
+		{
+			"label": "Quitter...",
+			"method_name": "OnReturnToMainMenu"
+		}
+	],
+	"Données": [
+		{
+			"label": "Ouvrir base de données",
+			"method_name": "OpenDBWindow"
+		}
+	]
+}
+ 

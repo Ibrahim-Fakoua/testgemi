@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://rhvf6shgm60a"]
+
+[ext_resource type="Script" path="res://scripts/interface/UserInterface.cs" id="1_l2bgj"]
+[ext_resource type="Script" path="res://scripts/interface/MainMenuBar.cs" id="2_y1h3b"]
+[ext_resource type="Script" uid="uid://beuurlk1lniqi" path="res://scripts/simulation/SettingsDialog.cs" id="4_jbsfc"]
+
+[node name="UserInterface" type="Control" unique_id=1450227599]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l2bgj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1225653847]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer" unique_id=1166806968]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_y1h3b")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2017741695]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GraphFolder" type="FoldableContainer" parent="VBoxContainer/HBoxContainer" unique_id=604466235]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+title = "Graphs"
+title_alignment = 1
+title_position = 1
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer/GraphFolder" unique_id=758656768]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="HSpacer" type="Control" parent="VBoxContainer/HBoxContainer" unique_id=581882448]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CreaturesFolder" type="FoldableContainer" parent="VBoxContainer/HBoxContainer" unique_id=493702006]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+title = "Creatures"
+title_alignment = 1
+title_position = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/CreaturesFolder" unique_id=290115745]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/CreaturesFolder/VBoxContainer" unique_id=2119764676]
+layout_mode = 2
+text = "Creature 1 Placeholder"
+horizontal_alignment = 1
+
+[node name="VSpacer" type="Control" parent="VBoxContainer/HBoxContainer/CreaturesFolder/VBoxContainer" unique_id=404523013]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreateCreatureButton" type="Button" parent="VBoxContainer/HBoxContainer/CreaturesFolder/VBoxContainer" unique_id=1002881189]
+layout_mode = 2
+text = "Create Creature"
+
+[node name="AddCreatureButton" type="Button" parent="VBoxContainer/HBoxContainer/CreaturesFolder/VBoxContainer" unique_id=734132106]
+layout_mode = 2
+text = "Add Creature"
+
+[node name="SettingsDialog" type="AcceptDialog" parent="." unique_id=552825231]
+oversampling_override = 1.0
+title = "Settings Dialog"
+size = Vector2i(450, 400)
+max_size = Vector2i(16384, 400)
+ok_button_text = "Save"
+script = ExtResource("4_jbsfc")
+
+[node name="TabContainer" type="TabContainer" parent="SettingsDialog" unique_id=279280611]
+visible = false
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 218.0
+offset_bottom = 308.0

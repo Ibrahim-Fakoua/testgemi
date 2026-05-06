@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\ibrah\\\\School\\\\04_CegepH2026\\\\Projet_Science\\\\SchoolProjects\\\\Projet-Integration\\\\scripts\\\\world_generation\\\\detail_generation\")",
+      "Bash(dotnet build:*)"
+    ]
+  }
+}
