@@ -32,6 +32,8 @@ public partial class GenerationManager : Node
 
 	private List<(int x, int y, FoodType food)> _pendingFoods = null;
 
+	public bool ShouldGenerateDetails { get; set; } = true;
+
 	[ExportGroup("Tile Probabilities")]
 	[Export] public float GrassProb = 10f;
 	[Export] public float SandProb = 8f;
@@ -137,6 +139,12 @@ private void UpdateGenerationParameters()
 	public void OnReceivePatches(Godot.Collections.Dictionary<Resource, Array<Array<Vector2I>>> patches)
 	{
 		Controller.Instance.Emit(new WorldGenCompleteSignal());
+
+		if (!ShouldGenerateDetails)
+		{
+			GD.Print("Skipping map detail generation for loaded simulation.");
+			return;
+		}
 
 		int i = 0;
 		
