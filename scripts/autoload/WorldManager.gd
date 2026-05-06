@@ -71,10 +71,11 @@ func get_local_to_map() -> Vector3i:
 
 
 
-func create_environment():
+func create_environment(should_generate_details: bool = true):
 	main_layer = MainLayerResource.instantiate()
 	add_child(main_layer)
 	GenerationManagerInstance = GenerationManagerRef.new()
+	GenerationManagerInstance.ShouldGenerateDetails = should_generate_details
 	add_child(GenerationManagerInstance)
 	GenerationManagerInstance.StartGeneration(100,100, main_layer, current_seed)
 	#heightMapRef = HeightMapTest.instantiate()

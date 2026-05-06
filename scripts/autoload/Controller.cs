@@ -88,7 +88,7 @@ public partial class Controller : Node
 	/// <summary>
 	/// Method called from anywhere that will handle creating a new simulation and setting it as the active scene.
 	/// </summary>
-	private void CreateSimulation(int seed = 12345)
+	private void CreateSimulation(int seed = 12345, bool shouldGenerateDetails = true)
 	{
 		if (seed == 12345)
 		{
@@ -114,7 +114,7 @@ public partial class Controller : Node
 		
 		// 5. Making the WorldManager create the environment while taking into acount the Simulation Config
 		WorldManager.Set("current_seed",Simulation.Instance.SimulationConfig.Seed);
-		WorldManager.Call("create_environment");
+		WorldManager.Call("create_environment", shouldGenerateDetails);
 		
 		GD.Print("[Controller] Simulation Spawned under Main Node.");
 		Emit(new NewSimulationSignal());
@@ -402,7 +402,7 @@ public partial class Controller : Node
 	{
 		JsonContent = LoadingJson.LoadJsonSave(filePath);
 		
-		CreateSimulation(JsonContent.Seed);
+		CreateSimulation(JsonContent.Seed, false);
 		Subscribe<PathfindBakingCompleteSignal>(FinalizeLoading);
 	}
 
