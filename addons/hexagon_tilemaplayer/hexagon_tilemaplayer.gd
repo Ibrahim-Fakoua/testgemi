@@ -90,6 +90,7 @@ signal astar_changed
 
 var _cube_to_map: Callable
 var _map_to_cube: Callable
+var _pathfinding_point_ids_by_coord: Dictionary[Vector2i, int] = {}
 
 ## Shape of a single tile. Based on a [ConvexPolygonShape2D] with the tile's corners. See also [member geometry_tile_approx_shape].
 var geometry_tile_shape: TileShape
@@ -186,7 +187,9 @@ func _pathfinding_does_tile_connect(tile: Vector2i, neighbor: Vector2i) -> bool:
 ## print(are_connected)  # Output: true
 ## [/codeblock]
 func pathfinding_get_point_id(coord: Vector2i) -> int:
-	return astar.get_closest_point(map_to_local(coord),true)
+	if _pathfinding_point_ids_by_coord.has(coord):
+		return _pathfinding_point_ids_by_coord[coord]
+	return astar.get_closest_point(map_to_local(coord), true)
 
 
 ## Updates the pathfinding weight for a specific hex.
@@ -269,6 +272,7 @@ func _draw_debug():
 
 func _pathfinding_create_points():
 	astar.clear()
+	_pathfinding_point_ids_by_coord.clear()
 	var cells := get_used_cells()
 	# Why 1.12 ? See https://github.com/godotengine/godot/issues/102612#issuecomment-2702275926
 	var needed_space = cells.size() * 1.12
@@ -281,6 +285,7 @@ func _pathfinding_create_points():
 		var weight = _pathfinding_get_tile_weight(coord)
 		var pos = map_to_local(coord)
 		astar.add_point(id, pos, weight)
+		_pathfinding_point_ids_by_coord[coord] = id
 
 
 func _debug_tile_coords_with_pathfinding(debug_container: Node2D, id: int):
@@ -345,13 +350,20 @@ func _pathfinding_create_connections() -> void:
 	for id in astar.get_point_ids():
 		var local_position = astar.get_point_position(id)
 		var map_position = local_to_map(local_position)
+		var cube_position = map_to_cube(map_position)
 		for neighbour in neighbours:
-			var neighbour_map_position = get_neighbor_cell(map_position, neighbour)
+			var neighbour_map_position = cube_to_map(cube_neighbor(cube_position, neighbour))
+			if neighbour_map_position == map_position:
+				continue
+			if not _pathfinding_point_ids_by_coord.has(neighbour_map_position):
+				continue
 			if get_cell_source_id(neighbour_map_position) == -1:
 				continue
 			if not _pathfinding_does_tile_connect(map_position, neighbour_map_position):
 				continue
-			var neighbour_id = astar.get_closest_point(map_to_local(neighbour_map_position),true)
+			var neighbour_id = _pathfinding_point_ids_by_coord[neighbour_map_position]
+			if neighbour_id == id or astar.are_points_connected(id, neighbour_id):
+				continue
 			astar.connect_points(id, neighbour_id)
 
 
