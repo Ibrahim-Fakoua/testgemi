@@ -15,6 +15,7 @@ public partial class PathfindingService : Node
     public const int Radius = 4;
 
     private GodotObject _tilemap;
+    private readonly Dictionary<Vector2I, long> _pointIdsByCoord = new();
 
     private List<Vector2I> _areasPos = new();
     private List<Area> _areas = new();
@@ -53,6 +54,7 @@ public partial class PathfindingService : Node
     /// </summary>
     public void CreatePathfinding()
     {
+        EnsurePathfindingGraph();
         var areas = DesignateAreas();
         CreateAreas(areas);
         FixAdjacencyForChunks(areas);
@@ -954,6 +956,63 @@ private void FixAdjacencyForChunks(List<Vector2I> areasToCheck)
     }
     #region Tilemap Helper Methods
 
+    private void EnsurePathfindingGraph()
+    {
+        var astar = GetAstar();
+        if (astar != null && astar.GetPointIds().Length > 0)
+        {
+            return;
+        }
+
+        astar = new AStar2D();
+        _pointIdsByCoord.Clear();
+
+        var usedCells = (Godot.Collections.Array<Vector2I>)_tilemap.Call("get_used_cells");
+        for (int id = 0; id < usedCells.Count; id++)
+        {
+            var coord = usedCells[id];
+            _pointIdsByCoord[coord] = id;
+            astar.AddPoint(id, MapToLocal(coord));
+        }
+
+        foreach (var coord in usedCells)
+        {
+            long id = _pointIdsByCoord[coord];
+            foreach (var neighborCube in CubeNeighbors(MapToCube(coord)))
+            {
+                var neighborCoord = CubeToMap(neighborCube);
+                if (neighborCoord == coord || !_pointIdsByCoord.TryGetValue(neighborCoord, out long neighborId))
+                {
+                    continue;
+                }
+
+                if (neighborId == id || astar.ArePointsConnected(id, neighborId))
+                {
+                    continue;
+                }
+
+                if (!DoTilesConnect(coord, neighborCoord))
+                {
+                    continue;
+                }
+
+                astar.ConnectPoints(id, neighborId);
+            }
+        }
+
+        _tilemap.Set("astar", astar);
+    }
+
+    private bool DoTilesConnect(Vector2I tile, Vector2I neighbor)
+    {
+        if (_tilemap.HasMethod("_pathfinding_does_tile_connect"))
+        {
+            return (bool)_tilemap.Call("_pathfinding_does_tile_connect", tile, neighbor);
+        }
+
+        return ValidateTile(MapToCube(tile)) && ValidateTile(MapToCube(neighbor));
+    }
+
     private AStar2D GetAstar()
     {
         return (AStar2D)_tilemap.Get("astar");
@@ -961,10 +1020,28 @@ private void FixAdjacencyForChunks(List<Vector2I> areasToCheck)
 
     private long PathfindingGetPointId(Vector2I coord)
     {
+        if (_pointIdsByCoord.TryGetValue(coord, out long id))
+        {
+            return id;
+        }
+
         return (long)_tilemap.Call("pathfinding_get_point_id", coord);
     }
 
+    private Vector2I CubeToMap(Vector3I cubePosition)
+    {
+        if (_tilemap.HasMethod("cube_to_map"))
+        {
+            return (Vector2I)_tilemap.Call("cube_to_map", cubePosition);
+        }
 
+        return CubeToAxial(cubePosition);
+    }
+
+    private Vector2 MapToLocal(Vector2I mapPosition)
+    {
+        return (Vector2)_tilemap.Call("map_to_local", mapPosition);
+    }
 
     private Vector3I MapToCube(Vector2I mapPosition)
     {
