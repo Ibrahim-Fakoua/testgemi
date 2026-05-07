@@ -99,7 +99,6 @@ func handle_world_gen_signal(_w_signal = null):
 # The method called to create the pathfinding
 func _run_pathfinding_async (layer):
 	layer.pathfinding_enabled = true
-	layer.pathfinding_generate_points()
 
 	var new_pathfinding = PathfindingService.new()
 	new_pathfinding.Initialize(layer)
