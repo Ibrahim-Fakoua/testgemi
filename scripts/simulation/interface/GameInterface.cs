@@ -15,7 +15,7 @@ public partial class GameInterface : CanvasLayer
 	private Label _warningLabel;
 
 	private Label _timeLabel;
-	private const int TicksPerDay = 60;
+	private const int TicksPerDay = 480;
 
 	private Label _entityLabel;
 

@@ -10,7 +10,7 @@ var biomes_list : Array[Biome] = []
 ## Global stats of the world.
 var world_stats_modifiers : StatsModifiers
 
-const GenerationManagerRef =  preload("res://scripts/world_generation/GenerationManager.cs") 
+const GenerationManagerRef =  preload("res://scripts/world_generation/GenerationManager.cs")
 const MainLayerResource: PackedScene = preload("res://environment/scenes/MainLayer.tscn")
 const HeightMapTest = preload("res://environment/scenes/HeightMapTest.tscn")
 var x;
@@ -100,9 +100,10 @@ func handle_world_gen_signal(_w_signal = null):
 func _run_pathfinding_async (layer):
 	layer.pathfinding_enabled = true
 	layer.pathfinding_generate_points()
-	
-	var new_pathfinding = PathfindingService.new(layer)
-	new_pathfinding.create_pathfinding()
+
+	var new_pathfinding = PathfindingService.new()
+	new_pathfinding.Initialize(layer)
+	new_pathfinding.CreatePathfinding()
 	
 	# because this method is run in a separate thread, it needs call_deferred() to work properly.
 	# Essentially, it 'returns' to the original thread.

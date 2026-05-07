@@ -205,12 +205,12 @@ private void UpdateGenerationParameters()
 			return;
 		}
 		
-		foreach (var food in _pendingFoods)
-		{
-		
-			foodsListNames[((int)food.food) % foodsListNames.Count].ExecuteAction(AxialToCube(food.x, food.y));
-
-		}
+		// foreach (var food in _pendingFoods)
+		// {
+		//
+		// 	foodsListNames[((int)food.food) % foodsListNames.Count].ExecuteAction(AxialToCube(food.x, food.y));
+		//
+		// }
 		
 		_pendingFoods = null;
 	}

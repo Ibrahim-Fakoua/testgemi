@@ -13,6 +13,7 @@ public partial class MainMenu : Node
 	private Button _openSettingsButton;
 	private Button _quitButton;
 	
+	private AcceptDialog _settingsDialog;
 	private AcceptDialog _newSimulationDialog;
 	private FileDialog _loadSimulationDialog;
 	
@@ -23,13 +24,16 @@ public partial class MainMenu : Node
 	{
 		_newSimulationButton = GetNode<Button>("%NewSimulationButton");
 		_loadSimulationButton = GetNode<Button>("%LoadSimulationButton");
+		_openSettingsButton = GetNode<Button>("%OpenSettingsButton");
 		_quitButton = GetNode<Button>("%QuitButton");
 		
+		_settingsDialog = GetNode<AcceptDialog>("%SettingsDialog");
 		_newSimulationDialog = GetNode<AcceptDialog>("%NewSimulationDialog");
 		_loadSimulationDialog = GetNode<FileDialog>("%LoadSimulationDialog");
 		
 		_newSimulationButton.Pressed += NewSimulation;
 		_loadSimulationButton.Pressed += LoadSimulation;
+		_openSettingsButton.Pressed += OpenSettings;
 		_quitButton.Pressed += QuitGame;
 		
 		_loadSimulationDialog.FileSelected += (path) => {

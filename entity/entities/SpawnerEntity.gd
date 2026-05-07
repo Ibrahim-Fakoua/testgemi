@@ -7,7 +7,7 @@ var spawn_cooldown: int
 var entity_spawned: GDScript
 var amount_per_spawn: int
 
-func _init(pathfinding:PathfindingService, position:Vector3i, spawn_cooldown:int, spawned_class_filepath:String, amount_per_spawn:int=1) -> void :
+func _init(pathfinding, position:Vector3i, spawn_cooldown:int, spawned_class_filepath:String, amount_per_spawn:int=1) -> void :
 	super._init(pathfinding, position, SpawnerEntityBehavior.new(self), "spawner")
 	self.spawn_cooldown = spawn_cooldown
 	self.amount_per_spawn = amount_per_spawn
@@ -17,7 +17,7 @@ func _init(pathfinding:PathfindingService, position:Vector3i, spawn_cooldown:int
 func spawn() -> void :
 	for i in range(amount_per_spawn) :
 		var chosen_location: Vector3i
-		var possible_spawn_locations = pathfinding.possible_moves(position)
+		var possible_spawn_locations = pathfinding.PossibleMoves(position)
 		possible_spawn_locations.erase(position)
 		if possible_spawn_locations.size() != 0 :
 			var random_location = randi() % possible_spawn_locations.size()

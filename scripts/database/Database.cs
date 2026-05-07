@@ -177,4 +177,11 @@ public class Database
 		connection.Open();
 		return connection.Query<T>(sql, parameters).ToList();
 	}
+
+	public void Execute(string sql, object parameters = null)
+	{
+		using var connection = new SqliteConnection($"Data Source={GlobalDatabasePath}");
+		connection.Open();
+		connection.Execute(sql, parameters);
+	}
 }

@@ -370,7 +370,7 @@ public partial class Controller : Node
 
 				case "OnReturnToMainMenu":
 					Emit(new ConfirmDialogSignal(
-						"Êtes-vous sûr de quitter ? Tout progrès non sauvegardé sera perdu."));
+						"Are you sure you want to exit? All unsaved simulation data will be lost."));
 					// ReturnToMainMenu(); // private method
 					break;
 				
@@ -387,12 +387,7 @@ public partial class Controller : Node
 					}
 
 					break;
-			
-				case "OpenDBWindow":
-					DatabaseViewer.Instance.Mode = Window.ModeEnum.Windowed;
-					break;
 			}
-			
 			
 		});
 	}

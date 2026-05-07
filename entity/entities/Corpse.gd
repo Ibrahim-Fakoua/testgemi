@@ -5,9 +5,9 @@ class_name Corpse
 var decay_rate:int = 300
 var rotten_sprite:String = "res://assets/entities/Corpse(Rotten).png"
 
-func _init(pathfinding:PathfindingService, position: Vector3i) -> void :
-	super._init(pathfinding, 2, position, CorpseBehavior.new(self))
+func _init(pathfinding, position: Vector3i) -> void :
+	super._init(pathfinding, 4, position, CorpseBehavior.new(self))
 	self.tags.append("meat")
 	_initialize_sprite("res://assets/entities/Corpse.png")
-	portion_food_content = 1500
+	portion_food_content = 3000
 	schedule_event(decay_rate, TypedEvent.new(func() : behavior.on_rot(), "rotting"))

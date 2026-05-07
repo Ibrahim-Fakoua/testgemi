@@ -54,9 +54,10 @@ var SpecieAttributes:Dictionary[Species, Callable] = {
 		att.lifespan_modifier = 1.3
 		att.base_intimidation = 7
 		att.fightscore = 8
-		att.morale = 3
+		att.morale = 1
 		att.food_chain = 6
 		att.stamina = 30
+		att.hunger_rate = 2
 		att.fatigue_rate = 1.6
 		att.sleep_efficiency = 1.5,
 	Species.SPECIE_3: func(att) : 
@@ -65,21 +66,22 @@ var SpecieAttributes:Dictionary[Species, Callable] = {
 		att.base_intimidation = 9
 		att.fightscore = 6
 		att.morale = 3
+		att.hunger_rate = 1.6
 		att.food_chain = 5
 		att.breeding_cooldown = 2
 		att.litter_size = 1,
 	Species.SPECIE_4: func(att) : 
 		att.speed = 0.8
-		att.morale = 2
+		att.morale = 6
 		att.food_chain = 6
-		att.fightscore = 4
+		att.fightscore = 2
 		att.stamina = 50,
 	Species.SPECIE_5: func(att) : 
-		att.speed = 1.8
+		att.speed = 2.5
 		att.lifespan_modifier = 1.6
 		att.food_chain = 2
-		att.fightscore = 5
-		att.breeding_cooldown = 2
+		att.fightscore = 3
+		att.breeding_cooldown = 1.5
 		att.litter_size = 2
 		att.hunger_rate = 1.6,
 	Species.SPECIE_6: func(att) : 
@@ -93,6 +95,7 @@ var SpecieAttributes:Dictionary[Species, Callable] = {
 		att.speed = 0.8
 		att.base_intimidation = 2
 		att.fightscore = 6
+		att.hunger_rate = 3
 		att.morale = 2
 		att.food_chain = 4
 		att.litter_size = 2,
@@ -129,7 +132,7 @@ var SpecieAttributes:Dictionary[Species, Callable] = {
 var SpecieTags:Dictionary[Species, Array] = {
 	Species.SPECIE_1: ["omnivore"],
 	Species.SPECIE_2: ["carnivore", "predator"],
-	Species.SPECIE_3: ["omnivore"],
+	Species.SPECIE_3: ["omnivore", "predator"],
 	Species.SPECIE_4: ["omnivore"],
 	Species.SPECIE_5: ["herbivore", "forager"],
 	Species.SPECIE_6: ["herbivore", "forager"],

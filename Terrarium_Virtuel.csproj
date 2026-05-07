@@ -6,10 +6,9 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="scripts\database\Data.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.72" />
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-rc4" />
+    <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.5" />
     <Content Include="signals\controller\controller-dir.md" />
   </ItemGroup>

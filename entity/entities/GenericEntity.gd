@@ -26,15 +26,15 @@ func _init(pathfinding_service: PathfindingService, position: Vector3i, behavior
 	self.tags.append(main_tag)
 	self.position = position
 	pathfinding = pathfinding_service
-	pathfinding.disable_tile(position,true)
+	pathfinding.DisableTile(position,true)
 	
-	if not pathfinding.validate_tile(position):
+	if not pathfinding.ValidateTile(position):
 		push_error("POSITION DOES NOT EXIST")
 	
-	var chunk = pathfinding.get_chunk_at_tile(position)
+	var chunk = pathfinding.GetChunkAtTile(position)
 	if chunk: 
-		chunk.add_to_chunk(self)
-	pathfinding.tilemap.add_child(self)
+		chunk.AddToChunk(self)
+	pathfinding.Tilemap.add_child(self)
 
 ## Initializes the entity's sprite image to be displayed appropriately
 func _initialize_sprite(filepath:String) -> void :
@@ -44,7 +44,7 @@ func _initialize_sprite(filepath:String) -> void :
 	sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
 	add_child(sprite)
-	sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 
 ## Schedules an event in the scheduler
 ## [br][br] ONLY USE THIS METHOD TO SCHEDULE EVENTS WHEN AN ENTITY SCHEDULES AN EVENT

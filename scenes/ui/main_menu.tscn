@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://cu05fe6c33p6r" path="res://scripts/main_menu/MainMenu.cs" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://crsfspyvoytdt" path="res://assets/MainMenu.png" id="2_1g8jr"]
 [ext_resource type="Script" uid="uid://beuurlk1lniqi" path="res://scripts/simulation/interface/SettingsDialog.cs" id="3_1g8jr"]
-[ext_resource type="LabelSettings" uid="uid://de8p87dsto18x" path="res://scripts/main_menu/resources/MainMenuLabel.tres" id="3_m1kxf"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_x2yvf"]
 
 [node name="MainMenu" type="CanvasLayer" unique_id=1266345628]
 script = ExtResource("1_ekxnf")
@@ -18,20 +15,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI_Root" unique_id=1192579037]
+[node name="TextureRect" type="TextureRect" parent="UI_Root" unique_id=1429989264]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI_Root/HBoxContainer" unique_id=1429989264]
-layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_1g8jr")
 expand_mode = 1
-stretch_mode = 2
+stretch_mode = 5
 
 [node name="CenterContainer" type="CenterContainer" parent="UI_Root" unique_id=512066754]
 layout_mode = 1
@@ -41,50 +35,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI_Root/CenterContainer" unique_id=1287859662]
-custom_minimum_size = Vector2(600, 275)
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Root/CenterContainer" unique_id=133012653]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="UI_Root/CenterContainer/PanelContainer" unique_id=1605670981]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer" unique_id=133012653]
-layout_mode = 2
-
-[node name="TitleRichTextLabel" type="Label" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=1713139549]
-custom_minimum_size = Vector2(128, 48)
-layout_mode = 2
-text = "Terrarium Virtuel"
-label_settings = ExtResource("3_m1kxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DevelopperLabel" type="Label" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=2039116249]
-layout_mode = 2
-text = "Par Eloi Blaser, Alex Robitaille, Médérik Comeau-Trudel et Ibrahim Fakoua"
-label_settings = SubResource("LabelSettings_x2yvf")
-
-[node name="NewSimulationButton" type="Button" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=103584433]
+[node name="NewSimulationButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=103584433]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Nouvelle Simulation"
 
-[node name="LoadSimulationButton" type="Button" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=1670155420]
+[node name="LoadSimulationButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=1670155420]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Charger une Simulation"
 
-[node name="QuitButton" type="Button" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=1361440749]
+[node name="OpenSettingsButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=307881877]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "[Fix] Merci d'avoir jouer!!"
-text = "Quitter"
+text = "Open Settings..."
 
-[node name="CreditLabel" type="Label" parent="UI_Root/CenterContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=1082628318]
+[node name="QuitButton" type="Button" parent="UI_Root/CenterContainer/VBoxContainer" unique_id=1361440749]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Arts : 
-- Mylène"
-horizontal_alignment = 1
+tooltip_text = "Because I am a loser"
+text = "Quitter"
 
 [node name="SettingsDialog" type="AcceptDialog" parent="UI_Root" unique_id=1142118960]
 unique_name_in_owner = true
@@ -95,7 +68,6 @@ ok_button_text = "Confirm"
 script = ExtResource("3_1g8jr")
 
 [node name="TabContainer" type="TabContainer" parent="UI_Root/SettingsDialog" unique_id=1344355826]
-visible = false
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 92.0

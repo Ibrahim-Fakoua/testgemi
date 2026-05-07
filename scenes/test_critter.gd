@@ -1,16 +1,16 @@
 extends Node2D
 
-var pathfinding_service : PathfindingService 
+const PathfindingServiceRef = preload("res://scripts/autoload/PathfindingService.cs")
+var pathfinding_service
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().create_timer(2).timeout
-	pathfinding_service = PathfindingService.new(get_node("TileMap/MainLayer"))
+	pathfinding_service = PathfindingServiceRef.new()
+	pathfinding_service.Initialize(get_node("TileMap/MainLayer"))
 	test_function()
 
-func test_function() -> void                                                                                                                                                                                                                                                                                                                                                             :
-	var test_areas : Array[Vector2i] = pathfinding_service.designate_areas()
-	pathfinding_service.create_areas(test_areas)
-	pathfinding_service.fix_adjacency_for_chunks(test_areas)
+func test_function() -> void:
+	pathfinding_service.CreatePathfinding()
 	var test_critter = Critter.new(CritterAttributes.new(), Vector3i(25, 35, 100), pathfinding_service)
 	add_child(test_critter)

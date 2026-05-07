@@ -214,4 +214,9 @@ public class CreationQueries
         public bool IsUpdate { get; set; } = false;
         public string UpdateSql { get; set; }
     }
+    
+    public class SpeciesRow : DataQuery
+    {
+        public int SpeId { get; set; }
+    }
 }

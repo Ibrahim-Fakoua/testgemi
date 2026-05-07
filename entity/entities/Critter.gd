@@ -29,7 +29,7 @@ var is_founder: bool = false
 
 var specie: SpecieData.Species
 
-func _init(specie:SpecieData.Species, position:Vector3i, pathfinding:PathfindingService, litter_size:int=1, db_species_id: int = 0) -> void :
+func _init(specie:SpecieData.Species, position:Vector3i, pathfinding, litter_size:int=1, db_species_id: int = 0) -> void :
 
 	super._init(pathfinding, position, CritterBehavior.new(self), "critter")
 	self.specie = specie
@@ -90,14 +90,14 @@ func _initialize_action_sprite() -> void :
 	action_sprite = Sprite2D.new()
 	action_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	action_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	action_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	action_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	action_sprite.z_index = 3
 	add_child(action_sprite)
 	
 	gender_sprite = Sprite2D.new()
 	gender_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	gender_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	gender_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	gender_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	gender_sprite.z_index = 3
 	add_child(gender_sprite)
 	
@@ -111,14 +111,14 @@ func _initialize_action_sprite() -> void :
 	pregnancy_sprite = Sprite2D.new()
 	pregnancy_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	pregnancy_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	pregnancy_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	pregnancy_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	pregnancy_sprite.z_index = 3
 	add_child(pregnancy_sprite)
 	
 	injury_sprite = Sprite2D.new()
 	injury_sprite.apply_scale(Vector2(CritterConst.SPRITE_SCALE, CritterConst.SPRITE_SCALE))
 	injury_sprite.offset = Vector2(CritterConst.SPRITE_X_OFFSET, CritterConst.SPRITE_Y_OFFSET)
-	injury_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+	injury_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	injury_sprite.z_index = 3
 	add_child(injury_sprite)
 
@@ -358,18 +358,18 @@ func eat(food:GenericFoodEntity) -> void :
 
 ## Changes the critter's and its sprites' positions on the map
 func move(new_position: Vector3i) -> void :
-	pathfinding.disable_tile(position,false)
-	pathfinding.disable_tile(new_position,true)
+	pathfinding.DisableTile(position,false)
+	pathfinding.DisableTile(new_position,true)
 	
-	var success = pathfinding.am_i_switching_chunks(self, position, new_position)
+	var success = pathfinding.AmISwitchingChunks(self, position, new_position)
 	
 	if success != null :
 		position = new_position
 		for specific_sprite in [sprite, action_sprite, pregnancy_sprite, gender_sprite, injury_sprite] :
-			specific_sprite.position = pathfinding.tilemap.map_to_local(pathfinding.tilemap.cube_to_map(position))
+			specific_sprite.position = pathfinding.Tilemap.map_to_local(pathfinding.Tilemap.cube_to_map(position))
 	
 		if current_action.action_name != CritterConst.ActionNames.FLEE :
-			var possible_danger = pathfinding.am_i_in_danger(position, get_fightscore(), get_morale(), [get_species()])
+			var possible_danger = pathfinding.AmIInDanger(position, get_fightscore(), get_morale(), [get_species()])
 			if possible_danger :
 				behavior.on_sense_danger()
 			elif current_action.action_name == CritterConst.ActionNames.FLEE :
@@ -390,7 +390,7 @@ func bear_child() -> void :
 func give_birth() -> void :
 	for i in range(attributes.litter_size) :
 		var chosen_location: Vector3i
-		var possible_spawn_locations = pathfinding.possible_moves(position)
+		var possible_spawn_locations = pathfinding.PossibleMoves(position)
 		possible_spawn_locations.erase(position)
 		if possible_spawn_locations.size() != 0 :
 			var random_location = randi() % possible_spawn_locations.size()

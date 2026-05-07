@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddumy1tytpcod"]
 
 [ext_resource type="Script" uid="uid://i3s8rqagbrlg" path="res://scripts/database/DatabaseViewer.cs" id="1_t3oqe"]
+[ext_resource type="Script" uid="uid://br3388bn68vuu" path="res://scripts/database/ViewerToolBarMenu.cs" id="2_qwd7r"]
 
 [node name="DBWindow" type="Window" unique_id=1179340245]
 process_mode = 3
@@ -29,21 +30,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuBar" type="MenuBar" parent="DatabaseUI/VBoxContainer" unique_id=1089466364]
+[node name="ViewerMenuBar" type="MenuBar" parent="DatabaseUI/VBoxContainer" unique_id=1089466364]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="PopupMenu" type="PopupMenu" parent="DatabaseUI/VBoxContainer/MenuBar" unique_id=727080396]
-oversampling_override = 1.0
-item_count = 4
-item_0/text = "Something"
-item_0/id = 0
-item_1/text = "Checkable"
-item_1/checkable = 1
-item_1/id = 1
-item_2/id = 2
-item_2/separator = true
-item_3/text = "Export as CSV"
-item_3/id = 3
+script = ExtResource("2_qwd7r")
 
 [node name="Control" type="Control" parent="DatabaseUI/VBoxContainer" unique_id=1920432539]
 layout_mode = 2

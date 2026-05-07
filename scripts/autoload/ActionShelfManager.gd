@@ -7,18 +7,21 @@ func _ready() -> void:
 	bomb = load("res://assets/Bomb_Sprite_Frames.tres")
 	
 func _handle_action(item_signal) -> void :
-	if (Controller.WorldManager as WorldManager).pathfinding:
-		if (Controller.WorldManager as WorldManager).pathfinding.validate_tile(item_signal.Position): 
-			if item_signal.CategoryName == "Espèces" :
-				handle_critter_signal(item_signal)
-			
-			if item_signal.CategoryName == "Nourriture":
-				handle_food_signal(item_signal)
-			
-			if item_signal.CategoryName == "Catastrophes":
-				handle_event_signal(item_signal)
-		else:
-			push_warning("Attempted to place something out of bounds")
+	var pathfinding = (Controller.WorldManager as WorldManager).pathfinding
+	if pathfinding == null:
+		push_warning("Pathfinding not ready yet, please wait for world generation to complete")
+		return
+	if pathfinding.ValidateTile(item_signal.Position): 
+		if item_signal.CategoryName == "Espèces" :
+			handle_critter_signal(item_signal)
+		
+		if item_signal.CategoryName == "Nourriture":
+			handle_food_signal(item_signal)
+		
+		if item_signal.CategoryName == "Catastrophes":
+			handle_event_signal(item_signal)
+	else:
+		push_warning("Attempted to place something out of bounds")
 
 func handle_critter_signal(item_signal) -> void :
 	match (item_signal.Id as int) : 
@@ -65,7 +68,7 @@ func explosion(position):
 	effect.play("default")
 	effect.animation_finished.connect(func() : effect.queue_free())
 	
-	var victim : GenericEntity = (Controller.WorldManager as WorldManager).pathfinding.find_entity_at_tile(position)
+	var victim : GenericEntity = (Controller.WorldManager as WorldManager).pathfinding.FindEntityAtTile(position)
 	if victim:
 		for event in victim.scheduled_events.get_events() :
 			victim.cancel_event(event.id)

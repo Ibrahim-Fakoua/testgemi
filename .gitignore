@@ -4,7 +4,6 @@
 
 # IDEA specific gitignore
 .idea/
-.vscode/
 
 # Exclude database 
 **.db
@@ -20,8 +19,10 @@
 
 
 *.sln.DotSettings.user
+Terrarium_Virtuel.csproj
 Terrarium_Virtuel.csproj.*
-*.old
+
 
 *.tmp
+*.user
 *.user

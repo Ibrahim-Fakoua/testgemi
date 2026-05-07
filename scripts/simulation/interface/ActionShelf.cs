@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Godot.Collections;
+using Terrarium_Virtuel.signals;
 using Terrarium_Virtuel.signals.action_items;
 using Array = Godot.Collections.Array;
 
@@ -50,10 +51,19 @@ public partial class ActionShelf : TabContainer
 		// Subscribe to your Controller's signal bus
 		Controller.Instance.Subscribe<ActionItemSignal>(NewActionItem);
 		Controller.Instance.Subscribe<NewSpeciesSignal>(OnNewSpeciesSignal);
+		Controller.Instance.Subscribe<PathfindBakingCompleteSignal>(HandlePathfindingSignal);
 		
 		TabChanged += OnTabChanged;
 	}
-	
+
+	private void HandlePathfindingSignal(PathfindBakingCompleteSignal obj)
+	{
+		foreach (var button in ActionButtons.GetButtons())
+		{
+			button.SetDisabled(false);
+		}
+	}
+
 	/// <summary>
 	/// When the tabs are changed, it toggles the saved reference to the clicked action item if it wasnt already.
 	/// </summary>
@@ -139,7 +149,8 @@ public partial class ActionShelf : TabContainer
 		{
 			Text = item.Label,
 			TooltipText = item.TooltipText,
-			ToggleMode = true
+			ToggleMode = true,
+			Disabled = true
 		};
 
 		if (ActionButtons != null)

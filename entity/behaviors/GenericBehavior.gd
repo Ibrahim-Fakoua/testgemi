@@ -14,10 +14,10 @@ func on_lifespan_end() -> void :
 
 func on_death() -> void :
 	if is_instance_valid(entity) : 
-		entity.pathfinding.disable_tile(entity.position,false)
-		var chunk_of_critter = entity.pathfinding.get_chunk_at_tile(entity.position)
+		entity.pathfinding.DisableTile(entity.position,false)
+		var chunk_of_critter = entity.pathfinding.GetChunkAtTile(entity.position)
 		if chunk_of_critter : 
-			entity.pathfinding.get_chunk_at_tile(entity.position).remove_from_chunk(entity)
+			entity.pathfinding.GetChunkAtTile(entity.position).RemoveFromChunk(entity)
 		for event in entity.scheduled_events.get_events().duplicate() :
 			entity.cancel_event(event.id)
 		entity.queue_free()

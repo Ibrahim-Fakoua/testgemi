@@ -1,0 +1,38 @@
+{
+	"Graphes": [
+		{
+			"label": "Rafrachir",
+			"method_name": "OnRefresh"
+		},
+		{
+			"label": "Rafraichir automatiquement",
+			"method_name": "OnAutoRefresh",
+			"type": "checkbox"
+		},
+		{
+			"label": "---"
+		},
+		{
+			"label" : "Avancées...",
+			"sub" : [
+				{
+					"label": "Montrer lignes de naissances",
+					"type" : "checkbox",
+					"method_name" : "OnShowBirths"
+				},
+				{
+					"label": "Montrer lignes de morts",
+					"type" : "checkbox",
+					"method_name" : "OnShowDeaths"
+				}
+			]
+		}
+	],
+	"Base de données": [
+		{
+			"label": "Vider les données",
+			"method_name": "OnEmptyDatabase"
+		}
+	]
+}
+ 

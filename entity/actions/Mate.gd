@@ -25,6 +25,8 @@ func end() -> void :
 		critter.finish_mating()
 	else :
 		critter.bear_child()
+	if critter.mate != null:
+		partner_id = critter.mate.creature_id
 	critter.mate = null
 	super.end()
 

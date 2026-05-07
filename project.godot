@@ -34,7 +34,7 @@ project/assembly_name="Terrarium_Virtuel"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/hexagon_tilemaplayer/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg", "res://addons/hexagon_tilemaplayer/plugin.cfg")
 
 [file_customization]
 

@@ -25,191 +25,191 @@ public partial class DatabaseManager : Node
 {
 	
 
-	public static DatabaseManager Instance { get; private set;}
-	private static string DbFileName = "db.sqlite";
-	private static string DatabaseResourcePath = "res://_persistent/db.sqlite";
+    public static DatabaseManager Instance { get; private set;}
+    private static string DbFileName = "db.sqlite";
+    private static string DatabaseResourcePath = "res://_persistent/db.sqlite";
 	
 	
-	private Database _database;
-	private Thread _thread;
-	private CancellationTokenSource _cts;
+    private Database _database;
+    private Thread _thread;
+    private CancellationTokenSource _cts;
 	
-	public Dictionary<int, int> SpeciesIdMap { get; private set; } = new(); // enum value → DB id
-	private Queue<int> _pendingSpeciesIndices = new();
+    public Dictionary<int, int> SpeciesIdMap { get; private set; } = new(); // enum value → DB id
+    private Queue<int> _pendingSpeciesIndices = new();
 	
 	
-	private int _speciesSeeded = 0;
-	private int _totalSpeciesToSeed = 11;
+    private int _speciesSeeded = 0;
+    private int _totalSpeciesToSeed = 11;
 
 	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		Instance = this;
-		_database = new Database();
-		_database.GlobalDatabasePath = ProjectSettings.GlobalizePath(DatabaseResourcePath);
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        Instance = this;
+        _database = new Database();
+        _database.GlobalDatabasePath = ProjectSettings.GlobalizePath(DatabaseResourcePath);
 		
-		_database.InitializeDatabase();
+        _database.InitializeDatabase();
 		
-		_cts = new CancellationTokenSource();
+        _cts = new CancellationTokenSource();
 		
-		_thread = new Thread(() => _database.LoopThroughQueue(_cts.Token))
-		{
-			IsBackground = true,
-			Name = "SQL_Worker_Thread",
-		};
-		_thread.Start();
+        _thread = new Thread(() => _database.LoopThroughQueue(_cts.Token))
+        {
+            IsBackground = true,
+            Name = "SQL_Worker_Thread",
+        };
+        _thread.Start();
 		
-		DefineSignals();
-	}
+        DefineSignals();
+    }
 
-	private void DefineSignals()
-	{
-		// ... here goes the subscription to the signals
-		Controller.Instance.Subscribe<GracefulStopSignal>(GracefulShutdown);
-	}
+    private void DefineSignals()
+    {
+        // ... here goes the subscription to the signals
+        Controller.Instance.Subscribe<GracefulStopSignal>(GracefulShutdown);
+    }
 
-	public override void _ExitTree()
-	{
-		// ... here goes the unsubscriptions
-		Controller.Instance.Unsubscribe<GracefulStopSignal>(GracefulShutdown);
-	}
+    public override void _ExitTree()
+    {
+        // ... here goes the unsubscriptions
+        Controller.Instance.Unsubscribe<GracefulStopSignal>(GracefulShutdown);
+    }
 
-	public void GracefulShutdown(GracefulStopSignal signal)
-	{
-		_cts.Cancel();
-		_thread.Join();
-	}
+    public void GracefulShutdown(GracefulStopSignal signal)
+    {
+        _cts.Cancel();
+        _thread.Join();
+    }
 
-	public void RegisterSpecies(Callable returnMethod, int parentSpeciesId, int birthTick)
-	{
-		var speEntry = new CreationQueries.SpeciesEntry 
-		{
-			SpeParentId = parentSpeciesId,
-			SpeBirthTick = birthTick,
-			SpeSimId = Simulation.Instance.SimulationId 
-		};
-		_database.Save(speEntry, returnMethod);
-	}
+    public void RegisterSpecies(Callable returnMethod, int parentSpeciesId, int birthTick)
+    {
+        var speEntry = new CreationQueries.SpeciesEntry 
+        {
+            SpeParentId = parentSpeciesId,
+            SpeBirthTick = birthTick,
+            SpeSimId = Simulation.Instance.SimulationId 
+        };
+        _database.Save(speEntry, returnMethod);
+    }
 
-	public void RegisterCreature(Callable returnMethod, int parentCreatureId, int birthTick, int speciesId)
-	{
-		var creEntry = new CreationQueries.CreatureEntry
-		{
-			CreParentId = parentCreatureId,
-			CreBirthTick = birthTick,
-			CreSpeId = speciesId,
-			CreSimId = Simulation.Instance.SimulationId,
-			CreSpeFounder = parentCreatureId == 0 // Or however you want to pass the IsFounder flag
-		};
-		_database.Save(creEntry, returnMethod);
-	}
+    public void RegisterCreature(Callable returnMethod, int parentCreatureId, int birthTick, int speciesId)
+    {
+        var creEntry = new CreationQueries.CreatureEntry
+        {
+            CreParentId = parentCreatureId,
+            CreBirthTick = birthTick,
+            CreSpeId = speciesId,
+            CreSimId = Simulation.Instance.SimulationId,
+            CreSpeFounder = parentCreatureId == 0 // Or however you want to pass the IsFounder flag
+        };
+        _database.Save(creEntry, returnMethod);
+    }
 	
-	public void RegisterCreatureDeath(int creatureId, int deathTick)
-	{
-		var entry = new CreationQueries.CreatureEntry { CreId = creatureId, CreDeathTick = deathTick };
-		_database.Update(entry);
-	}
+    public void RegisterCreatureDeath(int creatureId, int deathTick)
+    {
+        var entry = new CreationQueries.CreatureEntry { CreId = creatureId, CreDeathTick = deathTick };
+        _database.Update(entry);
+    }
 	
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="returnMethod"></param>
-	/// <param name="simSeed"></param>
-	/// <param name="simConfig"></param> The JSON string of the simulation config.
-	public void RegisterSimulation(Callable returnMethod, SimConfig simConfig)
-	{
-		var simEntry = new CreationQueries.SimulationEntry
-		{
-			SimSeed = simConfig.Seed,
-			SimStartTime = (int)Time.GetUnixTimeFromSystem(),
-			SimConfig = JsonSerializer.Serialize(simConfig) // Or however you serialize your config
-		};
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="returnMethod"></param>
+    /// <param name="simSeed"></param>
+    /// <param name="simConfig"></param> The JSON string of the simulation config.
+    public void RegisterSimulation(Callable returnMethod, SimConfig simConfig)
+    {
+        var simEntry = new CreationQueries.SimulationEntry
+        {
+            SimSeed = simConfig.Seed,
+            SimStartTime = (int)Time.GetUnixTimeFromSystem(),
+            SimConfig = JsonSerializer.Serialize(simConfig) // Or however you serialize your config
+        };
 		
-		_database.Save(simEntry, returnMethod);
-	}
+        _database.Save(simEntry, returnMethod);
+    }
 	
 	
-	public void RegisterLogAction(int actorId, string logAction, string logDetails, int logTick)
-	{
-		var logEntry = new CreationQueries.LogEntry
-		{
-			LogActorId = actorId,
-			LogAction = logAction,
-			LogDetails = logDetails,
-			LogTick = logTick,
-			LogSimId = Simulation.Instance.SimulationId
-		};
-		_database.Save(logEntry);
-	}
+    public void RegisterLogAction(int actorId, string logAction, string logDetails, int logTick)
+    {
+        var logEntry = new CreationQueries.LogEntry
+        {
+            LogActorId = actorId,
+            LogAction = logAction,
+            LogDetails = logDetails,
+            LogTick = logTick,
+            LogSimId = Simulation.Instance.SimulationId
+        };
+        _database.Save(logEntry);
+    }
 	
-	public void SeedBaseSpecies(int simId)
-	{
-		_speciesSeeded = 0;
+    public void SeedBaseSpecies(int simId)
+    {
+        _speciesSeeded = 0;
 	
-		_pendingSpeciesIndices.Clear();
+        _pendingSpeciesIndices.Clear();
 		
-		for (int i = 0; i < _totalSpeciesToSeed; i++)
-		{
-			_pendingSpeciesIndices.Enqueue(i);
-			var callback = new Callable(this, nameof(_onBaseSpeciesRegistered));
-			RegisterSpecies(callback, 0, 0);
-		}
-	}
+        for (int i = 0; i < _totalSpeciesToSeed; i++)
+        {
+            _pendingSpeciesIndices.Enqueue(i);
+            var callback = new Callable(this, nameof(_onBaseSpeciesRegistered));
+            RegisterSpecies(callback, 0, 0);
+        }
+    }
 	
-	public void _onBaseSpeciesRegistered(int dbId)
-	{
-		int enumIndex = _pendingSpeciesIndices.Dequeue();
-		SpeciesIdMap[enumIndex] = dbId;
-		_speciesSeeded++;
+    public void _onBaseSpeciesRegistered(int dbId)
+    {
+        int enumIndex = _pendingSpeciesIndices.Dequeue();
+        SpeciesIdMap[enumIndex] = dbId;
+        _speciesSeeded++;
 
-		if (_speciesSeeded == _totalSpeciesToSeed)
-		{
-			Controller.Instance.Emit(new SimulationRegisteredSignal(Simulation.Instance.SimulationId));
-		}
-	}
+        if (_speciesSeeded == _totalSpeciesToSeed)
+        {
+            Controller.Instance.Emit(new SimulationRegisteredSignal(Simulation.Instance.SimulationId));
+        }
+    }
 	
-	public int GetSpeciesDbId(int enumIndex)
-	{
-		if (SpeciesIdMap.TryGetValue(enumIndex, out int dbId))
-			return dbId;
+    public int GetSpeciesDbId(int enumIndex)
+    {
+        if (SpeciesIdMap.TryGetValue(enumIndex, out int dbId))
+            return dbId;
 	
-		GD.PushError($"[DatabaseManager] No DB id found for species enum index {enumIndex}");
-		return -1;
-	}
+        GD.PushError($"[DatabaseManager] No DB id found for species enum index {enumIndex}");
+        return -1;
+    }
 	
-	
-	
-
-	public List<ActionCountRow> GetActionCounts(int simId)
-	{
-		return _database.Query<ActionCountRow>(
-			"SELECT LOG_ACTION as LogAction, COUNT(*) as Count FROM Logs WHERE LOG_SIM_ID = @SimId GROUP BY LOG_ACTION",
-			new { SimId = simId }
-		).ToList();
-	}
 	
 	
 
-	public List<PopulationAtTickRow> GetPopulationAtTick(int simId, int tick)
-	{
-		return _database.Query<PopulationAtTickRow>(
-			@"SELECT CRE_SPE_ID as SpeciesId, COUNT(*) as Count
+    public List<ActionCountRow> GetActionCounts(int simId)
+    {
+        return _database.Query<ActionCountRow>(
+            "SELECT LOG_ACTION as LogAction, COUNT(*) as Count FROM Logs WHERE LOG_SIM_ID = @SimId GROUP BY LOG_ACTION",
+            new { SimId = simId }
+        ).ToList();
+    }
+	
+	
+
+    public List<PopulationAtTickRow> GetPopulationAtTick(int simId, int tick)
+    {
+        return _database.Query<PopulationAtTickRow>(
+            @"SELECT CRE_SPE_ID as SpeciesId, COUNT(*) as Count
 					FROM Creatures
 					WHERE CRE_SIM_ID = @SimId
 					AND CRE_BIRTH_TICK <= @Tick
 					AND (CRE_DEATH_TICK IS NULL OR CRE_DEATH_TICK > @Tick)
 					GROUP BY CRE_SPE_ID",
-			new { SimId = simId, Tick = tick }
-		).ToList();
-	}
+            new { SimId = simId, Tick = tick }
+        ).ToList();
+    }
 	
 	
 
-	public List<PopulationRow> GetPopulationInRange(int simId, int fromTick, int toTick)
-	{
-		return _database.Query<PopulationRow>(
-			@"WITH RECURSIVE ticks(tick) AS (
+    public List<PopulationRow> GetPopulationInRange(int simId, int fromTick, int toTick)
+    {
+        return _database.Query<PopulationRow>(
+            @"WITH RECURSIVE ticks(tick) AS (
 					SELECT @FromTick
 					UNION ALL
 					SELECT tick + 1 FROM ticks WHERE tick < @ToTick
@@ -237,24 +237,57 @@ public partial class DatabaseManager : Node
 				FROM alive a
 				LEFT JOIN deaths d ON a.tick = d.tick AND a.CRE_SPE_ID = d.CRE_SPE_ID
 				ORDER BY a.tick, a.CRE_SPE_ID",
-			new { SimId = simId, FromTick = fromTick, ToTick = toTick }
-		).ToList();
-	}
+            new { SimId = simId, FromTick = fromTick, ToTick = toTick }
+        ).ToList();
+    }
 	
 	
 
-	public List<SimulationRow> GetAllSimulations()
-	{
-		return _database.Query<SimulationRow>(
-			"SELECT SIM_ID as SimId, SIM_SEED as SimSeed, SIM_START_TIME as SimStartTime FROM Simulation ORDER BY SIM_START_TIME DESC"
-		).ToList();
-	}
+    public List<SimulationRow> GetAllSimulations()
+    {
+        return _database.Query<SimulationRow>(
+            "SELECT SIM_ID as SimId, SIM_SEED as SimSeed, SIM_START_TIME as SimStartTime FROM Simulation ORDER BY SIM_START_TIME DESC"
+        ).ToList();
+    }
 	
-	public (int min, int max) GetTickRange(int simId)
-	{
-		return _database.Query<(int, int)>(
-			"SELECT MIN(CRE_BIRTH_TICK), MAX(CRE_BIRTH_TICK) FROM Creatures WHERE CRE_SIM_ID = @SimId",
-			new { SimId = simId }
-		).FirstOrDefault();
-	}
+    public (int min, int max) GetTickRange(int simId)
+    {
+        return _database.Query<(int, int)>(
+            "SELECT MIN(CRE_BIRTH_TICK), MAX(CRE_BIRTH_TICK) FROM Creatures WHERE CRE_SIM_ID = @SimId",
+            new { SimId = simId }
+        ).FirstOrDefault();
+    }
+
+    public void EmptyDatabase()
+    {
+        _database.Execute(
+            @"PRAGMA foreign_keys = OFF;
+          DELETE FROM Logs;
+          DELETE FROM Creatures;
+          DELETE FROM Species;
+          DELETE FROM Simulation;
+          PRAGMA foreign_keys = ON;"
+        );
+    }
+	
+    public List<ActionCountRow> GetActionCountsBySpecies(int simId, int speciesId)
+    {
+        return _database.Query<ActionCountRow>(
+            @"SELECT l.LOG_ACTION as LogAction, COUNT(*) as Count
+          FROM Logs l
+          JOIN Creatures c ON l.LOG_ACTOR_ID = c.CRE_ID
+          WHERE l.LOG_SIM_ID = @SimId
+          AND c.CRE_SPE_ID = @SpeciesId
+          GROUP BY l.LOG_ACTION",
+            new { SimId = simId, SpeciesId = speciesId }
+        ).ToList();
+    }
+    
+    public List<CreationQueries.SpeciesRow> GetSpeciesForSim(int simId)
+    {
+        return _database.Query<CreationQueries.SpeciesRow>(
+            "SELECT SPE_ID as SpeId FROM Species WHERE SPE_SIM_ID = @SimId ORDER BY SPE_ID",
+            new { SimId = simId }
+        ).ToList();
+    }
 }
